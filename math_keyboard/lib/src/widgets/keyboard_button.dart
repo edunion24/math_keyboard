@@ -37,8 +37,7 @@ class KeyboardButton extends StatefulWidget {
   _KeyboardButtonState createState() => _KeyboardButtonState();
 }
 
-class _KeyboardButtonState extends State<KeyboardButton>
-    with SingleTickerProviderStateMixin {
+class _KeyboardButtonState extends State<KeyboardButton> with SingleTickerProviderStateMixin {
   late final _animationController = AnimationController(
     duration: const Duration(milliseconds: 50),
     reverseDuration: const Duration(milliseconds: 200),
@@ -77,21 +76,11 @@ class _KeyboardButtonState extends State<KeyboardButton>
     Widget result = MouseRegion(
       onEnter: (_) => _handleHover(true),
       onExit: (_) => _handleHover(false),
-      child: RawGestureDetector(
-        behavior: HitTestBehavior.opaque,
-        gestures: <Type, GestureRecognizerFactory>{
-          _AlwaysWinningGestureRecognizer: GestureRecognizerFactoryWithHandlers<
-              _AlwaysWinningGestureRecognizer>(
-            () => _AlwaysWinningGestureRecognizer(),
-            (_AlwaysWinningGestureRecognizer instance) {
-              instance
-                ..onTap = widget.onTap
-                ..onTapUp = _handleTapUp
-                ..onTapDown = _handleTapDown
-                ..onTapCancel = _handleTapCancel;
-            },
-          ),
-        },
+      child: GestureDetector(
+        onTap: widget.onTap,
+        onTapUp: _handleTapUp,
+        onTapDown: _handleTapDown,
+        onTapCancel: _handleTapCancel,
         child: Padding(
           padding: const EdgeInsets.all(4),
           child: DecoratedBox(
@@ -106,8 +95,7 @@ class _KeyboardButtonState extends State<KeyboardButton>
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(8),
                     color: Colors.white.withOpacity(
-                      Curves.easeInOut.transform(_animationController.value) /
-                          3,
+                      Curves.easeInOut.transform(_animationController.value) / 3,
                     ),
                   ),
                   child: Center(
@@ -120,6 +108,23 @@ class _KeyboardButtonState extends State<KeyboardButton>
           ),
         ),
       ),
+
+      /// TapDown이 된 상태에서 ListView 스크롤이 발생하면 문제가 발생하여 아래 RawGestureDetector를 GestureDetector로 변경함.
+      // RawGestureDetector(
+      //  behavior: HitTestBehavior.opaque,
+      //  gestures: <Type, GestureRecognizerFactory>{
+      //    _AlwaysWinningGestureRecognizer: GestureRecognizerFactoryWithHandlers<
+      //        _AlwaysWinningGestureRecognizer>(
+      //      () => _AlwaysWinningGestureRecognizer(),
+      //      (_AlwaysWinningGestureRecognizer instance) {
+      //        instance
+      //          ..onTap = widget.onTap
+      //          ..onTapUp = _handleTapUp
+      //          ..onTapDown = _handleTapDown
+      //          ..onTapCancel = _handleTapCancel;
+      //      },
+      //    ),
+      //  },
     );
 
     if (widget.onHold != null) {
@@ -141,9 +146,9 @@ class _KeyboardButtonState extends State<KeyboardButton>
 /// A gesture recognizer that wins in every arena.
 ///
 /// This prevents buttons with sqrt's from not responding.
-class _AlwaysWinningGestureRecognizer extends TapGestureRecognizer {
-  @override
-  void rejectGesture(int pointer) {
-    acceptGesture(pointer);
-  }
-}
+// class _AlwaysWinningGestureRecognizer extends TapGestureRecognizer {
+//   @override
+//   void rejectGesture(int pointer) {
+//     acceptGesture(pointer);
+//   }
+// }

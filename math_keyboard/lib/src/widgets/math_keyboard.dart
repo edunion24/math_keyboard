@@ -98,8 +98,7 @@ class MathKeyboard extends StatelessWidget {
                   top: false,
                   child: _KeyboardBody(
                     insetsState: insetsState,
-                    slideAnimation:
-                        slideAnimation == null ? null : curvedSlideAnimation,
+                    slideAnimation: slideAnimation == null ? null : curvedSlideAnimation,
                     child: Padding(
                       padding: padding,
                       child: Center(
@@ -120,12 +119,9 @@ class MathKeyboard extends StatelessWidget {
                                 ),
                                 child: _Buttons(
                                   controller: controller,
-                                  page1: type == MathKeyboardType.numberOnly
-                                      ? numberKeyboard
-                                      : standardKeyboard,
-                                  page2: type == MathKeyboardType.numberOnly
-                                      ? null
-                                      : functionKeyboard,
+                                  page1: standardKeyboard,
+                                  page2: functionKeyboard,
+                                  page3: textKeyboard,
                                   onSubmit: onSubmit,
                                 ),
                               ),
@@ -216,8 +212,7 @@ class _KeyboardBodyState extends State<_KeyboardBody> {
       if (!mounted) return;
 
       final renderBox = context.findRenderObject() as RenderBox;
-      insetsState[ObjectKey(this)] =
-          renderBox.size.height * (widget.slideAnimation?.value ?? 1);
+      insetsState[ObjectKey(this)] = renderBox.size.height * (widget.slideAnimation?.value ?? 1);
     });
   }
 
@@ -288,6 +283,7 @@ class _Buttons extends StatelessWidget {
     required this.controller,
     this.page1,
     this.page2,
+    this.page3,
     this.onSubmit,
   }) : super(key: key);
 
@@ -301,6 +297,9 @@ class _Buttons extends StatelessWidget {
   /// The buttons to display.
   final List<List<KeyboardButtonConfig>>? page2;
 
+  /// The buttons to display.
+  final List<List<KeyboardButtonConfig>>? page3;
+
   /// Function that is called when the enter / submit button is tapped.
   ///
   /// Can be `null`.
@@ -313,8 +312,20 @@ class _Buttons extends StatelessWidget {
       child: AnimatedBuilder(
         animation: controller,
         builder: (context, child) {
-          final layout =
-              controller.secondPage ? page2! : page1 ?? numberKeyboard;
+          final pages = [
+            if (page1 != null) page1!,
+            if (page2 != null) page2!,
+            if (page3 != null) page3!,
+          ];
+
+          final configIcons = [
+            if (page1 != null) CustomKeyIcons.key_symbols,
+            if (page2 != null) null,
+            if (page3 != null) null,
+          ];
+
+          final layout = pages[controller.page];
+
           return Column(
             children: [
               for (final row in layout)
@@ -346,23 +357,21 @@ class _Buttons extends StatelessWidget {
                         else if (config is PageButtonConfig)
                           _BasicButton(
                             flex: config.flex,
-                            icon: controller.secondPage
-                                ? null
-                                : CustomKeyIcons.key_symbols,
-                            label: controller.secondPage ? '123' : null,
-                            onTap: controller.togglePage,
+                            icon: configIcons[controller.page],
+                            label: [null, 'abc', '123'][controller.page],
+                            onTap: controller.nextPage,
                             highlightLevel: 1,
                           )
                         else if (config is PreviousButtonConfig)
                           _NavigationButton(
                             flex: config.flex,
-                            icon: Icons.chevron_left_rounded,
+                            icon: Icons.arrow_back,
                             onTap: controller.goBack,
                           )
                         else if (config is NextButtonConfig)
                           _NavigationButton(
                             flex: config.flex,
-                            icon: Icons.chevron_right_rounded,
+                            icon: Icons.arrow_forward,
                             onTap: controller.goNext,
                           )
                         else if (config is SubmitButtonConfig)

@@ -116,11 +116,67 @@ const _subtractButton = BasicKeyboardButtonConfig(
 final functionKeyboard = [
   [
     const BasicKeyboardButtonConfig(
-      label: r'\frac{\Box}{\Box}',
-      value: r'\frac',
-      args: [TeXArg.braces, TeXArg.braces],
+      label: r'\pi',
+      value: r'\pi',
       asTex: true,
     ),
+    const BasicKeyboardButtonConfig(
+      label: r'\alpha',
+      value: r'\alpha',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\beta',
+      value: r'\beta',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\gamma',
+      value: r'\gamma',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\theta',
+      value: r'\theta',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\infty',
+      value: r'\infty',
+      asTex: true,
+    ),
+  ],
+  [
+    const BasicKeyboardButtonConfig(
+      label: r'>',
+      value: r'>',
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'<',
+      value: r'<',
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\ge',
+      value: r'\ge',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\le',
+      value: r'\le',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'=',
+      value: r'=',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'\neq',
+      value: r'\neq',
+      asTex: true,
+    ),
+  ],
+  [
     const BasicKeyboardButtonConfig(
       label: r'\Box^2',
       value: '^2',
@@ -132,121 +188,45 @@ final functionKeyboard = [
       value: '^',
       args: [TeXArg.braces],
       asTex: true,
-      keyboardCharacters: [
-        '^',
-        // This is a workaround for keyboard layout that use ^ as a toggle key.
-        // In that case, "Dead" is reported as the character (e.g. for German
-        // keyboards).
-        'Dead',
-      ],
     ),
     const BasicKeyboardButtonConfig(
-      label: r'\sin',
-      value: r'\sin(',
-      asTex: true,
-      keyboardCharacters: ['s'],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: r'\sin^{-1}',
-      value: r'\sin^{-1}(',
+      label: r'\frac{\Box}{\Box}',
+      value: r'\frac',
+      args: [TeXArg.braces, TeXArg.braces],
       asTex: true,
     ),
-  ],
-  [
     const BasicKeyboardButtonConfig(
       label: r'\sqrt{\Box}',
       value: r'\sqrt',
       args: [TeXArg.braces],
       asTex: true,
-      keyboardCharacters: ['r'],
     ),
     const BasicKeyboardButtonConfig(
-      label: r'\sqrt[\Box]{\Box}',
-      value: r'\sqrt',
-      args: [TeXArg.brackets, TeXArg.braces],
+      label: r'\vert',
+      value: r'\vert',
       asTex: true,
     ),
-    const BasicKeyboardButtonConfig(
-      label: r'\cos',
-      value: r'\cos(',
-      asTex: true,
-      keyboardCharacters: ['c'],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: r'\cos^{-1}',
-      value: r'\cos^{-1}(',
-      asTex: true,
-    ),
-  ],
-  [
-    const BasicKeyboardButtonConfig(
-      label: r'\log_{\Box}(\Box)',
-      value: r'\log_',
-      asTex: true,
-      args: [TeXArg.braces, TeXArg.parentheses],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: r'\ln(\Box)',
-      value: r'\ln(',
-      asTex: true,
-      keyboardCharacters: ['l'],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: r'\tan',
-      value: r'\tan(',
-      asTex: true,
-      keyboardCharacters: ['t'],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: r'\tan^{-1}',
-      value: r'\tan^{-1}(',
-      asTex: true,
-    ),
+    DeleteButtonConfig(),
   ],
   [
     const PageButtonConfig(flex: 3),
-    const BasicKeyboardButtonConfig(
-      label: '(',
-      value: '(',
-      highlighted: true,
-      keyboardCharacters: ['('],
-    ),
-    const BasicKeyboardButtonConfig(
-      label: ')',
-      value: ')',
-      highlighted: true,
-      keyboardCharacters: [')'],
-    ),
     PreviousButtonConfig(),
     NextButtonConfig(),
-    DeleteButtonConfig(),
+    SubmitButtonConfig(),
   ],
 ];
 
 /// Standard keyboard for math expression input.
 final standardKeyboard = [
   [
-    _digitButtons[7],
-    _digitButtons[8],
-    _digitButtons[9],
+    _digitButtons[1],
+    _digitButtons[2],
+    _digitButtons[3],
     const BasicKeyboardButtonConfig(
-      label: '×',
-      value: r'\cdot',
-      keyboardCharacters: ['*'],
+      label: '.',
+      value: r'.',
       highlighted: true,
     ),
-    const BasicKeyboardButtonConfig(
-      label: '÷',
-      value: r'\frac',
-      keyboardCharacters: ['/'],
-      args: [TeXArg.braces, TeXArg.braces],
-      highlighted: true,
-    ),
-  ],
-  [
-    _digitButtons[4],
-    _digitButtons[5],
-    _digitButtons[6],
     const BasicKeyboardButtonConfig(
       label: '+',
       value: '+',
@@ -256,15 +236,42 @@ final standardKeyboard = [
     _subtractButton,
   ],
   [
-    _digitButtons[1],
-    _digitButtons[2],
-    _digitButtons[3],
-    _decimalButton,
+    _digitButtons[4],
+    _digitButtons[5],
+    _digitButtons[6],
+    const BasicKeyboardButtonConfig(
+      label: ',',
+      value: r',',
+      highlighted: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: '×',
+      value: r'\times',
+      keyboardCharacters: ['*'],
+      highlighted: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: '÷',
+      value: r'\div',
+      keyboardCharacters: ['/'],
+      highlighted: true,
+    ),
+  ],
+  [
+    _digitButtons[7],
+    _digitButtons[8],
+    _digitButtons[9],
+    _digitButtons[0],
+    const BasicKeyboardButtonConfig(
+      label: r'\pm',
+      value: r'\pm',
+      asTex: true,
+      highlighted: true,
+    ),
     DeleteButtonConfig(),
   ],
   [
     const PageButtonConfig(),
-    _digitButtons[0],
     PreviousButtonConfig(),
     NextButtonConfig(),
     SubmitButtonConfig(),
@@ -294,6 +301,113 @@ final numberKeyboard = [
   [
     PreviousButtonConfig(),
     _digitButtons[0],
+    NextButtonConfig(),
+    SubmitButtonConfig(),
+  ],
+];
+
+/// Text keyboard for math expression input.
+final textKeyboard = [
+  [
+    const BasicKeyboardButtonConfig(
+      label: r'a',
+      value: '{a}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'b',
+      value: '{b}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'c',
+      value: '{c}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'd',
+      value: '{d}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'e',
+      value: '{e}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'h',
+      value: '{h}',
+      asTex: true,
+    ),
+  ],
+  [
+    const BasicKeyboardButtonConfig(
+      label: r'i',
+      value: '{i}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'k',
+      value: '{k}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'l',
+      value: '{l}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'm',
+      value: '{m}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'n',
+      value: '{n}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'p',
+      value: '{p}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'q',
+      value: '{q}',
+      asTex: true,
+    ),
+  ],
+  [
+    const BasicKeyboardButtonConfig(
+      label: r'r',
+      value: '{r}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r's',
+      value: '{s}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r't',
+      value: '{t}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'u',
+      value: '{u}',
+      asTex: true,
+    ),
+    const BasicKeyboardButtonConfig(
+      label: r'v',
+      value: '{v}',
+      asTex: true,
+    ),
+    DeleteButtonConfig(),
+  ],
+  [
+    const PageButtonConfig(),
+    PreviousButtonConfig(),
     NextButtonConfig(),
     SubmitButtonConfig(),
   ],
